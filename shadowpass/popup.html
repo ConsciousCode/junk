@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="halthash.js"></script>
+		<style>
+			.hidden {
+				display: none;
+			}
+			
+			.shown {}
+		</style>
+	</head>
+	<body>
+		<div class="hidden" id="generate">
+			<input type="text" readonly id="genpw"/>
+			<div id="geno"></div>
+		</div>
+		<div class="hidden" id="login">
+			<input type="text" placeholder="Identity" id="logid"/>
+			<input type="password" placeholder="Password" id="password"/>
+			<input type="button" value="Login" id="loginbut"/>
+		</div>
+		<div class="hidden" id="newprofile">
+			<input type="text" placeholder="Identity" id="newid"/>
+			<input type="newpwd" id="password"/>
+			<input type="newconfirm" id="confirm"/>
+			<input type="button" value="New" id="newbut"/>
+		</div>
+		<script>
+			'use strict';
+			
+			function E(x) {
+				return document.querySelector(x);
+			}
+			
+			async function login_enable(profiles) {
+				let loginmode = 'start';
+				E("#login .submit").addEventListener('click',
+					() => (async function() {
+						if(loginmode == 'running') {
+							loginmode = 'stop';
+						}
+						else {
+							let id = E("#login .id").value.toLowerCase();
+							let profile = profiles[id];
+							
+							if(profile) {
+								let key = await halt_extract(
+									password.value, profile,
+									() => loginmode == 'stop'
+								);
+								
+								start_session(profile, key);
+							}
+							else {
+								error("Unknown profile " + id);
+							}
+						}
+					})()
+				);
+				
+				let newmode = "start";
+				E("#login .new").addEventListener('click',
+					() => (async function() {
+						if(newmode == 'running') {
+							newmode = 'stop';
+						}
+						else if(newmode == 'start') {
+							let
+								pass = E("#new .password").value,
+								conf = E("#new .confirm").value;
+							
+							if(pass == conf) {
+								E("#new .submit").value = "Finish";
+								
+								let hh = await halt_prepare(
+									pass,
+									() => newmode == 'stop'
+								);
+								
+								chrome.storage.sync.set({
+									session: hh
+								});
+							}
+						}
+					})()
+				});
+			}
+			
+			function generate_enable(session, verify) {
+			}
+			
+			chrome.storage.sync.get(['profiles', 'session'], data => {
+				let profiles;
+				if(typeof data.profiles == 'undefined') {
+					chrome.storage.sync.set({profiles: {}});
+					profiles = {};
+				}
+				else {
+					profiles = data.profiles;
+				}
+				
+				let session;
+				if(typeof data.session == 'undefined') {
+					login.className = "shown";
+					login_enable(profiles);
+				}
+				else {
+					generate.className = "shown";
+					generate_enable(data.session, profiles);
+				}
+			});
+		</script>
+	</body>
+</html>

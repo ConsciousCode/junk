@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Glu</title>
+		<script src="glu.js"></script>
+		<script src="glu2js.js"></script>
+		<script src="ooz.js"></script>
+		<style>
+			#interactive{
+				display:flex;
+			}
+			
+			#ooz{
+				flex:1;
+			}
+			#js{
+				flex:1;
+				border:1px solid black;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="interactive">
+			<textarea id="ooz"></textarea>
+			<div id="js"></div>
+		</div>
+		glu.code([ParamNode...] sig,CallableNode next,[GraphNode...] params)<br/>
+		glu.intrinsic([TypeNode...] sig,string name)<br/>
+		glu.param(TypeNode type)
+		<script>
+			'use strict';
+			
+			var js=document.getElementById("js");
+			
+			document.getElementById("ooz").addEventListener("change",
+				function(){
+					var prog=glu.glu2js(ooz.parse(this.value));
+					js.innerHTML=prog.replace(/[\n<>&]/g,function($0){
+						return {
+							'\n':"<br/>",
+							"<":"&lt;",
+							">":"&gt;",
+							"&":"&amp;"
+						}[$0];
+					});
+				}
+			);
+		</script>
+	</body>
+</html>

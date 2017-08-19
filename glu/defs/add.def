@@ -1,0 +1,10 @@
+{
+	"name":"add",
+	"signature":["#","#",["#"]]
+	"code":null,
+	"prereqs":[],
+	"identities":[
+		["add","a","b",
+			[{"type":"#","name":"c"}
+	]
+}

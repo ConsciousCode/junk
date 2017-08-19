@@ -1,0 +1,157 @@
+Fighting styles
+ * Tears - enemies get sadder, stronger with more wil
+ * Heart - enemies get more rotten, stronger with less wil?
+ * Physical - enemies get torn up,
+Include suicide themes as gameplay
+ * BoI Sacrifice Room?
+ * Make it always possible to kill yourself
+Money for willpower
+Health animation
+ * Heart, hole in the center gets bigger for less hp
+At start, have player pick a super item they get at the end
+ * Throughout the game, tease them with this where they can't get it
+Boss battles are encounters with loved ones
+Religious themes => "selling your soul"
+Each level => new level of abstraction
+Doors lock like Isaac, unlock by sacrificing 1/2 health
+Mom is helpful symbol
+Punish hubris severely
+Less wil => more tears, faster speed
+ * Self harm improves stats
+ * Doubles as a dif moderator, bad players get better stats
+3 primary routes
+ * Give in to rot
+ * Kill yourself
+ * Find a way to keep going
+1 secret route
+ * Fix depression (only after 100%) - this has to be a MONUMENTAL task
+1? Joke route
+ * Singularity
+Bosses
+ * Finals (Ego, Stigma, Cowardice, Me, Stupidity)
+ * The Mirror - shows floor hazards in mirror, your reflection stabs itself, mirror shatters - reflection comes out for last phase
+ * The Martyr -  swaps your health so you have to get hit?
+ * The Lonely - Invincible unless you're in its sight, which is where it hits, makes puppets of enemies which shoot
+ * Dad - same role as mom, but make the player regret after killing. Make him = Greed in shops too, but after Dad no shops
+ * Cerebrus - Two-hemisphere brain rep.ing parents. 1st phase, hurts itself and shoots at player. 2nd phase, splits and fires at other brain, shooting at player
+Enemy classes
+ * Shambler, Boo, Greedy, Spider, Stationed,
+ * Shooter, Body, Spawner,
+Weapon symbols
+ * Sharp objects - Hurtful words
+ * Tears - Sadness of the shooter
+Enemies
+ * Friend - Beamos that shoots spears
+ * Company - Enemy that shoots back twice as hard when hit
+ * Reminders - Like WW spike balls
+ * Normals - Enemy that purposefully ignores you, hit with tears to get a laser
+ * Doctor - Throws pills and ideas with strange effects
+ * Flanders - Wander randomly, periodically produce a small wave which hurts Me
+ * Comfort Zone - Giant spider-thing in a costume that pulls you in and hugs you, whispering depressive thoughts nito your ear
+ * Worthless Protoplasm - ala Earthbound
+ * Sweetie - looks nice n cuddly, except it's deformed somehow and hurts
+ * Dancer - avoids bullets better than others by jumping
+ * Fear - worm that runs away, but drags its body with it so it's easier to hit
+ * Specter - ghost, drains wil on impact and dies
+Rooms
+ * Nursery - mom themes
+ * Memory room
+ * Treasure room (?) - if items are ignored frequently, offer them with extra stuff
+ * Work room - convert wil to money
+ * Arcade - convert money to wil
+Decorations
+ * Tissue box - Shoot to get items, but random chance of hard-to-dodge attack and then destruction
+ * Present - Like chests in BoI
+ * False Chest - explodes if opened
+Items
+ * Gas - on (condition), fart and all enemies while this is active move away while shooting
+Primary death animation is heart crystal falling out and shattering
+No enemy scaling, one canonical damage scale
+Have characters in-game that give you tasks, which if completed give you bonuses
+don't kill dad => bonus
+Level 1: Purgatory
+ * Start like Isaac, but have him look around first, confused
+
+Songs from OGA:
+http://opengameart.org/content/another-space-background-track
+http://opengameart.org/content/loading-screen-loop
+http://opengameart.org/content/mystical-theme
+http://opengameart.org/content/happy-arcade-tune
+http://opengameart.org/content/background-space-track
+
+http://opengameart.org/content/old-city-theme
+http://opengameart.org/content/no-more-magic
+http://opengameart.org/content/winds-of-stories
+http://opengameart.org/content/forgoten-tomb-ambience
+http://opengameart.org/content/caves-of-sorrow
+http://opengameart.org/content/soft-mysterious-harp-loop
+http://opengameart.org/content/game-game
+http://opengameart.org/content/the-field-of-dreams
+http://opengameart.org/content/snowfall
+http://opengameart.org/content/loop-house-in-a-forest
+http://opengameart.org/content/red-curtain
+http://opengameart.org/content/spacelife-14
+http://opengameart.org/content/loop-lonely-witch
+http://opengameart.org/content/lurid-delusion
+http://opengameart.org/content/lines-of-code
+http://opengameart.org/content/raining-bits
+http://opengameart.org/content/orchestral-battle-music
+http://opengameart.org/content/space-atmospere
+http://opengameart.org/content/please-answer-me-my-friend
+http://opengameart.org/content/music-loop-variations
+http://opengameart.org/content/searching
+http://opengameart.org/content/enchanted-tiki-86
+http://opengameart.org/content/red-doors-v20
+http://opengameart.org/content/heart-of-machine
+http://opengameart.org/content/happy-lullaby-song17
+http://opengameart.org/content/factory-ambiance
+http://opengameart.org/content/forest-ambience
+http://opengameart.org/content/lonelyhood
+http://opengameart.org/content/meadow-thoughts
+http://opengameart.org/content/pressure
+http://opengameart.org/content/space-sprinkles
+Ended on page 6
+
+Design principles:
+ * Sound design should let someone play blind
+ * "Make your own difficulty" risk v reward
+ * Skill is much more important than stats - a skilled player should be able to have fun no matter what stats they have
+ * Punishments should be player-inflicted; dice rolls, even if the player chooses them, feel cheap
+ * Isaac puzzle rooms are boring because they always have the same solution
+Inspiration sources:
+ * Binding of Isaac
+ * OoT shadow temple
+
+4 Main villains:
+ * Mom & Dad
+ * Depression/Self (either works)
+ * Eldritch beasty
+
+Evil Eye:
+ * Static motif, symbolize mental breakdown/inability to think
+Music has strong beat to sound like a heart? That always spooks me. Might be able to play with that to communicate info too
+What layout variables do we have easy control of?
+ * Branching and rejoining
+Before map gen, we need enemy types as rooms should be designed around them
+Enemy qualities:
+ * Movement style: Sit, run, rush, pounce, pinch, zone, jump, stumble
+   - Note: Pinch is the pacman style of AI design, where some enemies should move toward one unit ahead/behind the player rather than a simple A*
+ * Attacks: Body, melee, range, AoE, cling, debuff, death, spawn
+ * Defense: None, phased, shield, dodge, run, hologram
+ * Death: Nothing, explode, shoot, spawn
+
+Boss idea:
+ * Sickly, lanky humanoid shoved into a tiny box, limbs clearly broken all over. To attack, it reaches out and swipes etc
+ * Humanoid shaves flesh off its body to spawn enemies which can attack
+I want thew game to feel endless, even though it has a defined end. Playing is fun, but playing with the end in mind should feel torturously laborous. Only by simply playing the game can you enjoy finishing it
+Idea: You can fight an end-floor boss unless you either have enough enemies killed or you take half your health. Generally players should get this naturally, but it leaves it open for speedrunners
+Should it be obvious where the bosses are? Signs etc?
+It's nice to know exactly what your health is, but maybe health can be a float, maybe with the maximum hit being marked. Maybe there can be a kind of "max damage" stat which caps damage taken in one go (before -> after i frames). Not knowing exactly what your health is is unnervnig because it sh ows a lack of control/info
+Is there such a thing as a proc gen metroidvania?
+Boss doors lock behind you - even if you get out, you'll need to pay again to get back in
+Hazard puzzle: walk in between cogs, dont' get crushed
+Floor where the walls are stuffed with living people just watching
+Ending - you put your eye in your heart?
+Having fun should come at the expense of finishing
+
+What once was is not, and what will ne'er was.

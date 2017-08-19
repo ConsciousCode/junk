@@ -1,0 +1,22 @@
+Challenge
+Size
+Navigability
+Exploration
+Discovery
+Regularity
+
+Traits
+	movable
+	burnable
+	heavy
+	controllable
+
+Species
+	animation descriptions
+	behaviors
+	
+	factory
+
+Creature
+	species
+	sprite

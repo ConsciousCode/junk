@@ -1,0 +1,20 @@
+:root {
+	--scale: 4;
+}
+
+.sprite {
+	overflow: hidden;
+	display: inline-block;
+	
+	transform: scale(var(--scale));
+	transform-origin: 0 0;
+	image-rendering: pixelated;
+}
+
+.flip {
+	transform: scale(calc(0 - var(--scale)), var(--scale)) translateX(-100%);
+}
+
+.pause {
+	animation-play-state: paused;
+}

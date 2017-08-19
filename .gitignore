@@ -1,0 +1,11 @@
+*.pyc
+*.jar
+*.exe
+*.dll
+*.a
+*.so
+*/bin/*
+
+*.wav
+*.mp3
+
