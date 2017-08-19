@@ -6,6 +6,10 @@
 *.so
 */bin/*
 
+*.o
+*.class
+*.out
+
 *.wav
 *.mp3
-
+*.blend
