@@ -1,0 +1,35 @@
+:root {
+	--base-color: white;
+	--border-color: color(var(--base-color) darken(5%));
+	
+	--button-rounding: 3px;
+}
+
+.button-group {
+	border-color: var(--border-color);
+}
+
+.button-group > * {
+	border-width: 1px solid var(--border-color);
+	
+	border-radius: 0;
+	border-left: 1px solid var(--border-color);
+	
+	background-color: var(--base-color);
+}
+
+.button-group:hover {
+	background-color: color(var(--base-color) shade(5%);
+}
+
+.button-group:first-child {
+	border-radius: var(--button-rounding) 0 0 var(--button-rounding);
+}
+
+.button-group:last-child {
+	border-radius: var(--button-rounding) 0 0 var(--button-rounding);
+	border-left: none;
+	border-right: 1px solid var(--border-color);
+}
+
+

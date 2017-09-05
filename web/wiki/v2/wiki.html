@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Wiki</title>
+		<script src="wiki.js"></script>
+		<style>
+			#input{
+				width:auto;
+				height:60px;
+				padding:3px;
+				margin:6px;
+			}
+			
+			.out{
+				border:1px solid black;
+				padding:3px;
+				margin:6px;
+				min-height:60px;
+			}
+		</style>
+	</head>
+	<body>
+		<textarea id="input"></textarea>
+		<pre id="rawout" class="out"></pre>
+		<div id="rawhtml" class="out"></div>
+		<div id="output" class="out"></div>
+		
+		<script>
+			var rawout=document.getElementById("rawout"),
+				rawhtml=document.getElementById("rawhtml"),
+				output=document.getElementById("output");
+			document.getElementById("input").
+				addEventListener("keyup",function(){
+					var ast=wiki.parse(wiki.preprocess(this.value)),
+						out=wiki.toHTML(ast);
+					console.log(rawout.innerHTML=ast.toString().replace(/[\n<&>]/g,
+						function(v){
+							return {
+								"\n\n":"<br/>",
+								"<":"&lt;",
+								"&":"&amp;",
+								">":"&gt;"
+							}[v];
+						}
+					));
+					rawhtml.textContent=out;
+					output.innerHTML=out;
+				});
+		</script>
+	</body>
+</html>

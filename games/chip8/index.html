@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>CHIP 8</title>
+		<script src="emulator.js"></script>
+	</head>
+	<body>
+		<audio loop src="beep.wav"></audio>
+		<canvas
+			id="screen" width="640" height="320" style="background:grey;"
+		>
+			Need canvas support
+		</canvas>
+		<script>
+			var PONG=base64_to_game(
+				"agJrDGw/bQyi6tq23NZuACLUZgNoAmBg8BXwBzAAEhrHF3cIaf+i8NZxour"+
+				"attzWYAHgoXv+YATgoXsCYB+LAtq2YAzgoX3+YA3goX0CYB+NAtzWovDWcY"+
+				"aEh5RgP4YCYR+HEkYCEnhGPxKCRx9p/0cAaQHWcRIqaAJjAYBwgLUSimj+Y"+
+				"wqAcIDVPwESomECgBU/ARK6gBU/ARLIgBU/ARLCYCDwGCLUjjQi1GY+MwFm"+
+				"A2j+MwFoAhIWef9J/mn/Esh5AUkCaQFgBPAYdgFGQHb+Emyi8v4z8mXxKWQ"+
+				"UZQDUVXQV8inUVQDugICAgICAgAAAAAAA"
+			);
+			var keys=[
+				'0','1','2','3','4','5','6','7','8','9',
+				'A','B','C','D','E','F'
+			];
+			emulate(
+				PONG,
+				document.getElementsByTagName("canvas")[0].getContext('2d'),
+				document.getElementsByTagName("audio")[0],
+				keys
+			);
+		</script>
+	</body>
+</html>

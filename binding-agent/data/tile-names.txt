@@ -1,1 +1,0 @@
-nothing:dirt:grass:tree:puddle:stone path:wood flooring:stone flooring:wall:carpet 1:carpet 2:carpet 3:up staircase:left staircase:right staircase

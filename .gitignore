@@ -4,6 +4,7 @@
 *.dll
 *.a
 *.so
+*.gch
 */bin/*
 
 *.o

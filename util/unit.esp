@@ -1,0 +1,50 @@
+return proto {
+	proto Dimension {
+		var base = nil, exp = 1, mult = 1;
+	
+		let new(base, exp, mult) {
+			this.base = base;
+			this.exp = exp;
+			this.mult = mult;
+		}
+	}
+
+	proto Metric {
+		var dim = nil, value = 0;
+	
+		let new(dim, value) {
+			this.dim = dim;
+			this.value = value;
+		}
+	
+		let convert(to) {
+			# 0 can be any dimension
+			if(value == 0) {
+				return new Metric(to, 0);
+			}
+		
+			if(to.base != this.base) {
+				fail new ConversionError(
+					"Cannot convert @{this} to @{to}"
+				);
+			}
+		
+			return new Metric(to, this.value*to.mult/this.dim.mult);
+		}
+	}
+
+	var
+		meter = new Dimension('m', 1, 1),
+		area = new Dimension('m', 2, 1),
+		volume = new Dimension('m', 3, 1);
+	
+	tsp = register((meter3*4.92892e-6).rename('teaspoon', ['t', 'tsp']))
+	tbsp = register(
+		(tsp*3).rename('tablespoon', ['T', 'tbsp', 'tbl', 'tbs'])
+	)
+	floz = register((tsp*6).rename('fluid ounce', ['floz']))
+	cup = register((tbsp*16).rename('cup', ['c']))
+	pint = register((cup*2).rename('pint', ['p', 'pt', 'flpt']))
+	quart = register((pint*2).rename('quart', ['q', 'qt', 'flqt']))
+	gallon = register((quart*4).rename('gallon', ['g', 'gal']))	
+}

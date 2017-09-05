@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>PTFG Archive</title>
+		<script src="metadata.js"></script>
+		<style>
+			body{
+				background-color:ghostwhite;
+			}
+			
+			#tpl{
+				display:none;
+			}
+			
+			img{
+				max-height:256px;
+				max-width:640px;
+				margin:4px;
+				position:relative;
+				
+				border:1px solid grey;
+			}
+			
+			img.loading{
+				opacity:0.75;
+			}
+			
+			.setlink{
+				color:#131;
+				background-color:#5FB33C;
+				border-radius:3px;
+				padding:3px;
+				display:inline-block;
+				margin:2px;
+				font-size:10pt;
+				display:inline-block;
+			}
+			
+			.tag{
+				color:#113;
+				background-color:#A6B6B5;
+				border-radius:3px;
+				padding:3px;
+				display:inline-block;
+				margin:2px;
+				font-size:10pt;
+			}
+			
+			.tag:hover{
+				background-color:#6E848F;
+				cursor:pointer;
+			}
+			
+			.artist-tag{
+				display:inline-flex;
+				margin:2px;
+				font-size:10pt;
+			}
+			
+			.artist-tag>*{
+				color:#113;
+				background-color:#A6B6B5;
+				padding:3px;
+			}
+			
+			.artist-tag :first-child{
+				border-radius:3px 0 0 3px;
+			}
+			
+			.artist-tag :nth-child(2){
+				padding-right:8px;
+				border-radius:0 3px 3px 0;
+			}
+			
+			.artist-tag>*:hover{
+				background-color:#6E848F;
+				cursor:pointer;
+			}
+			
+			.round{
+				border-radius:3px !important;
+			}
+			
+			.tags{
+				max-width:320px;
+				display:inline-block;
+			}
+			
+			nav{
+				text-align:center;
+			}
+			
+			nav ul{
+				list-style-type:none;
+				display:inline-block;
+				margin:0;
+				padding:0;
+			}
+			
+			nav li{
+				display:inline-block;
+				margin:0 4px 0 4px;
+			}
+			
+			nav a{
+				color:grey;
+				text-decoration:none;
+				font-size:18pt;
+			}
+			
+			nav a:hover,nav a.current{
+				color:blue;
+			}
+			
+			.result{
+				display:inline-block;
+				padding:4px;
+			}
+			
+			.left{
+				width:0;
+				height:0;
+				border-top:24px solid transparent;
+				border-bottom:24px solid transparent;
+
+				border-right:24px solid blue;
+				
+				display:inline-block;
+				margin:4px;
+				
+				cursor:pointer;
+			}
+			
+			.no.left{
+				border-right:24px solid grey;
+				cursor:default;
+			}
+			
+			.right{
+				width:0;
+				height:0;
+				border-top:24px solid transparent;
+				border-bottom:24px solid transparent;
+
+				border-left:24px solid blue;
+				
+				display:inline-block;
+				margin:4px;
+				
+				cursor:pointer;
+			}
+			
+			.no.right{
+				border-left:24px solid grey;
+				cursor:default;
+			}
+			
+			.meta{
+				text-align:center;
+			}
+			
+			.artist{
+				font-size:9pt;
+			}
+			
+			.artist::before{
+				content:'By: ';
+			}
+		</style>
+	</head>
+	<body>
+		<noscript>This won't really work unless you enable JS.</noscript>
+		<div id="tpl">
+			<div class="result">
+				<div class="no left"></div>
+				<a href><img/></a>
+				<div class="right"></div>
+				<div class="meta">
+					<div><a class="setlink">Link</a></div>
+					<div class="tags"></div>
+					<div class="artist"></div>
+				</div>
+			</div>
+		</div>
+		<p>
+			Want to help support this? Go to <a href="https://ipfs.io/">ipfs.io</a>, install a node, and pin this site to host all the files!
+		</p>
+		<p>
+			Use ~ to negate, | to search for alternates, by:... to search for an author, and /num + ... to select an image set. ~tg costume | big-mac searches for everything that's either not TG and involves a costume or involves Big Mac. CTRL+click negates, CTRL+SPACE or's. The URL should always get you back to your current state.
+		</p>
+		<p>Other links:</p>
+		<ul>
+			<li><a href="https://docs.google.com/document/d/1HaNIUNBmck0gu8unbTkdT6lMleDGj81a-WNXbsIwXtw/edit#">Hypno files</a></li>
+			<li><a href="http://derpy.me/PonyTF">Story archive</a></li>
+			<li><a href="http://derpy.me/ptfgnsfw">NSFW thread</a></li>
+		</ul>
+		<p id="artists"></p>
+		<section id="artist-info"></section>
+		<p id="tags"></p>
+		<input type="text" id="search"/>
+		<input type="button" id="go" value="Search"/>
+		<input type="button" id="clear" value="Clear"/>
+		<span id="last-search"></span>
+		<nav class="navtop">
+			<div class="nav left"></div>
+			<ul class="pages"></ul>
+			<div class="nav right"></div>
+		</nav>
+		<p id="result"></p>
+		<nav class="navbot">
+			<div class="nav left"></div>
+			<ul class="pages"></ul>
+			<div class="nav right"></div>
+		</nav>
+		
+		<script>
+			'use strict';
+			
+			var PAGESIZE=12,npages=0;
+			var mdata=meta.data;
+			
+			function get_page(){
+				var m=/.+?\/.*?\/(\d+)/.exec(location.hash);
+				
+				return m?m[1]|0:0;
+			}
+			
+			function set_page(page){
+				var m=/^(#.+?\/.*?)(?:\/?\d+)?$/.exec(location.hash);
+				
+				if(m){
+					location.hash=m[1]+"/"+page;
+				}
+				else{
+					location.hash=location.hash+"//"+page;
+				}
+				
+				var cur=document.getElementsByClassName("current");
+				if(cur.length){
+					cur[0].className="";
+				}
+				document.querySelectorAll("nav.navtop a")[page].className="current";
+				document.querySelectorAll("nav.navbot a")[page].className="current";
+			}
+			
+			/**
+			 * Build a mdata tag element.
+			**/
+			function build_tag(tag){
+				var e=document.createElement("div");
+				e.className="tag";
+				e.textContent=tag;
+				
+				e.addEventListener("click",function(e){
+					search.value+=(e.ctrlKey?"~":"")+tag+" ";
+				});
+				
+				return e;
+			}
+			
+			/**
+			 * Canonicalize an artist name.
+			**/
+			function canonical_artist(artist){
+				return artist.toLowerCase().replace(/\s+/g,'-');
+			}
+			
+			/**
+			 * Build the description of an artist
+			**/
+			function build_artist_info(artist){
+				var data=meta.artists[artist],
+					e=document.createElement("div");
+				
+				var c=document.createElement("p");
+				c.textContent="Artist: ";
+				c.appendChild(build_artist(artist));
+				e.appendChild(c);
+				
+				if(data.alts.length){
+					var alts=document.createElement("p");
+					alts.textContent="Also known as ";
+					if(data.alts.length==1){
+						alts.textContent+=data.alts[0];
+					}
+					else if(data.alts.length==2){
+						alts.textContent+=data.alts[0]+" and "+data.alts[1];
+					}
+					else{
+						alts.textContent+=
+							data.slice(0,data.length-1).join(", ")+
+							" and "+data[data.length-1];
+					}
+					e.appendChild(alts);
+				}
+				
+				var links=document.createElement("p");
+				links.textContent="Links: ";
+				
+				for(var i=0;i<data.links.length;++i){
+					var a=document.createElement("a");
+					a.setAttribute("href",data.links[i]);
+					a.textContent=i;
+					
+					links.appendChild(a);
+					links.innerHTML+=" ";
+				}
+				
+				e.appendChild(links);
+				
+				return e;
+			}
+			
+			/**
+			 * Build an artist search button.
+			**/
+			function build_artist(artist){
+				var e=document.createElement("div");
+				e.className="artist-tag";
+				
+				var name=document.createElement("div"),
+					info=document.createElement("div");
+				
+				name.textContent=artist;
+				info.textContent="?";
+				
+				name.addEventListener("click",function(e){
+					search.value+=(e.ctrlKey?"~by:":"by:")+
+						canonical_artist(artist)+" ";
+				});
+				
+				info.addEventListener("click",function(e){
+					var ai=document.getElementById("artist-info");
+					ai.innerHTML="";
+					ai.appendChild(build_artist_info(artist));
+				});
+				
+				e.appendChild(name);
+				
+				if(artist in meta.artists){
+					e.appendChild(info);
+				}
+				else{
+					name.className="round";
+				}
+				
+				return e;
+			}
+			
+			/**
+			 * Build a page navbar
+			**/
+			function build_navbar(items){
+				var nav=document.createElement("nav");
+				for(var i=0;i<items/PAGESIZE;++i){
+					var ln=document.createElement("a"),
+						m=/^(#.+?\/.*?)(?:\/?\d+)?$/.exec(location.hash);
+					
+					if(m){
+						ln.href=m[1]+"/"+i;
+					}
+					else{
+						ln.href=location.hash+"//"+i;
+					}
+					ln.textContent=i;
+					
+					var li=document.createElement("li");
+					li.appendChild(ln);
+					
+					nav.appendChild(li);
+				}
+				
+				return nav;
+			}
+			
+			/**
+			 * Build an image match based on a template.
+			**/
+			function build_match(data,n){
+				var index=0,
+					node=
+						document.getElementById("tpl").
+						children[0].cloneNode(true),
+					img=node.getElementsByTagName("img")[0],
+					link=node.getElementsByTagName("a")[0],
+					left=node.getElementsByClassName("left")[0],
+					right=node.getElementsByClassName("right")[0],
+					setlink=node.getElementsByClassName("setlink")[0];
+					tags=node.getElementsByClassName("tags")[0];
+				
+				if(data.files.length<=1){
+					right.className="no right";
+				}
+				
+				var m=/^(#.+?)(?:\/.*?)?(?:\/?\d+)?$/.exec(location.hash);
+				setlink.href=m[1]+"/"+n;
+				
+				data.tags.sort();
+				for(var i=0;i<data.tags.length;++i){
+					tags.appendChild(build_tag(data.tags[i]));
+				}
+				
+				var artist=data.artist||"Unknown",
+					ae=node.getElementsByClassName("artist")[0];
+				ae.appendChild(build_artist(artist));
+				
+				function change_src(src){
+					img.onload=function(){
+						img.className="";
+					}
+					
+					link.href=img.src="https://ipfs.io/ipfs/"+src;
+					
+					img.className="loading";
+				}
+				
+				change_src(data.files[0]);
+				
+				left.addEventListener("click",function(){
+					if(index==0){
+						index=data.files.length-1;
+					}
+					else{
+						--index;
+					}
+					
+					this.className=index?"left":"no left";
+					right.className=(
+						index==data.files.length-1?"no right":"right"
+					);
+					
+					change_src(data.files[index]);
+				});
+				
+				right.addEventListener("click",function(){
+					index=(index+1)%data.files.length;
+					
+					left.className=index?"left":"no left";
+					this.className=(
+						index==data.files.length-1?"no right":"right"
+					);
+					
+					change_src(data.files[index]);
+				});
+				
+				return node;
+			}
+			
+			/**
+			 * Search for a query
+			**/
+			function go_search(value){
+				if(!value){
+					result.innerHTML="";
+					last_search.textContent="";
+					return;
+				}
+				
+				var m=/([^\/]+)\/((?:(?:\d+-\d+|\d+)\+?)+)?(?:\/(\d+))?/.exec(value),
+					imgset=null,page=0;
+				if(m){
+					value=m[1];
+					imgset=m[2]?m[2].split("+"):null;
+					page=(m[3]|0)||0;
+					
+					if(imgset){
+						for(var i=0;i<imgset.length;++i){
+							if(m=/(\d+)-(\d+)/.exec(imgset[i])){
+								imgset[i]=[m[1]-1,m[2]-1];
+							}
+							else{
+								imgset[i]=[imgset[i]-1,imgset[i]-1];
+							}
+						}
+					}
+				}
+				
+				var alt=value.split("|").map(function(v){
+					var tags=v.split(/\+/g),untags=[];
+					for(var i=0;i<tags.length;++i){
+						if(/^~/.test(tags[i])){
+							untags.push(tags.splice(i,1)[0].slice(1));
+							--i;
+						}
+					}
+					
+					return function(data){
+						var BY=/^by:(.+)$/i,t=data.tags,
+							a=canonical_artist(data.artist||"Unknown"),m;
+						
+						for(var i=0;i<tags.length;++i){
+							if(m=BY.exec(tags[i])){
+								if(a!=m[1].toLowerCase()){
+									return false;
+								}
+								
+								continue;
+							}
+							
+							if(t.indexOf(tags[i])<0){
+								return false;
+							}
+						}
+						
+						for(var i=0;i<untags.length;++i){
+							if(m=BY.exec(untags[i])){
+								if(a==m[1].toLowerCase()){
+									return false;
+								}
+								
+								continue;
+							}
+							
+							if(t.indexOf(untags[i])>=0){
+								return false;
+							}
+						}
+						
+						return true;
+					}
+				});
+				
+				function check(tags){
+					for(var i=0;i<alt.length;++i){
+						if(alt[i](tags)){
+							return true;
+						}
+					}
+					
+					return false;
+				}
+				
+				var match=[];
+				
+				for(var i=0;i<mdata.length;++i){
+					if(check(mdata[i])){
+						match.push(mdata[i]);
+					}
+				}
+				
+				npages=Math.ceil(match.length/PAGESIZE);
+				
+				if(page==0){
+					navtopleft.className="no nav left";
+					navbotleft.className="no nav left";
+				}
+				else{
+					navtopleft.className="nav left";
+					navbotleft.className="nav left";
+				}
+				
+				if(page==npages-1){
+					navtopright.className="no nav right";
+					navbotright.className="no nav right";
+				}
+				else{
+					navtopright.className="nav right";
+					navbotright.className="nav right";
+				}
+				
+				pages_top.innerHTML="";
+				pages_top.appendChild(build_navbar(match.length));
+				
+				result.innerHTML="";
+				
+				if(imgset){
+					var resfilter=[];
+					for(var i=0;i<match.length;++i){
+						for(var j=0;j<imgset.length;++j){
+							var isj=imgset[j];
+							if(i>=isj[0] && i<=isj[1]){
+								resfilter.push(match[i]);
+							}
+						}
+					}
+				}
+				else{
+					var resfilter=match;
+				}
+				
+				resfilter=resfilter.slice(page*PAGESIZE,(page+1)*PAGESIZE);
+				
+				for(var i=0;i<resfilter.length;++i){
+					result.appendChild(build_match(resfilter[i],i+1));
+				}
+				
+				pages_bot.innerHTML="";
+				pages_bot.appendChild(build_navbar(match.length));
+				
+				var cur=document.getElementsByClassName("current");
+				if(cur.length){
+					cur[0].className="";
+				}
+				document.querySelectorAll("nav.navtop a")[page].className="current";
+				document.querySelectorAll("nav.navbot a")[page].className="current";
+			}
+			
+			//Dump artists
+			var artset={};
+			for(var i=0;i<mdata.length;++i){
+				if(mdata[i].artist){
+					artset[mdata[i].artist]=(artset[mdata[i].artist]|0)+1;
+				}
+			}
+			
+			var artists=Object.keys(artset);
+			for(var i=0;i<artists.length;++i){
+				if(artset[artists[i]]==1){
+					artists.splice(i--,1);
+				}
+			}
+			artists.sort();
+			
+			var ae=document.getElementById("artists");
+			for(var i=0;i<artists.length;++i){
+				ae.appendChild(build_artist(artists[i]));
+			}
+			
+			//Dump tags
+			var tagset={};
+			for(var i=0;i<mdata.length;++i){
+				var t=mdata[i].tags;
+				for(var j=0;j<t.length;++j){
+					tagset[t[j]]=mdata[i];
+				}
+			}
+			
+			var tags=Object.keys(tagset);
+			tags.sort();
+			
+			var te=document.getElementById("tags");
+			for(var i=0;i<tags.length;++i){
+				te.appendChild(build_tag(tags[i]));
+			}
+			
+			//Print the search
+			var search=document.getElementById("search"),
+				last_search=document.getElementById("last-search"),
+				result=document.getElementById("result"),
+				pages_top=document.getElementsByClassName("pages")[0],
+				pages_bot=document.getElementsByClassName("pages")[1],
+				navtopleft=document.getElementsByClassName("nav left")[0],
+				navbotleft=document.getElementsByClassName("nav left")[1],
+				navtopright=document.getElementsByClassName("nav right")[0],
+				navbotright=document.getElementsByClassName("nav right")[1];
+			
+			document.getElementById("go").addEventListener("click",function(){
+				last_search.textContent=search.value;
+				
+				var query=search.value.trim().replace(/\s*\|\s*/g,"|").
+					replace(/\s*\/\s*/g,"/").replace(/\s+/g,"+");
+				location.hash="#"+query;
+				go_search(query);
+				
+				search.value="";
+			});
+			
+			document.getElementById("clear").addEventListener(
+				"click",function(){
+					location.hash="";
+					search.value="";
+					go_search("");
+				}
+			);
+			
+			function leftpage(){
+				var page=get_page();
+				set_page(page?page-1:npages-1);
+			}
+			
+			function rightpage(){
+				set_page((get_page()+1)%npages);
+			}
+			
+			navtopleft.addEventListener("click",leftpage);
+			navbotleft.addEventListener("click",leftpage);
+			
+			navtopright.addEventListener("click",rightpage);
+			navbotright.addEventListener("click",rightpage);
+			
+			function hashchange(){
+				if(location.hash){
+					go_search(location.hash.slice(1));
+				}
+			}
+			hashchange();
+			
+			search.value=location.hash.slice(1).replace(/\|/g," | ").
+				replace(/\//g," / ").replace(/\+/g," + ");
+			
+			window.addEventListener("hashchange",hashchange);
+			
+			window.addEventListener("keyup",function(e){
+				if((e.key||e.which)==32 && e.ctrlKey){
+					search.value+=search.value.endsWith(" ")?"| ":" | ";
+				}
+			});
+		</script>
+		<footer>
+			<center>Powered by <a href="https://ipfs.io/">IPFS</a>.</center>
+		</footer>
+	</body>
+</html>

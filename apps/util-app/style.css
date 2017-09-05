@@ -1,0 +1,29 @@
+.group {
+	--radius: 2px;
+	--border: 1px solid black;
+	--horiz-border: var(--border);
+	--vert-border: var(--border);
+	
+	display: flex;
+}
+.group > * {
+	margin: 0;
+	border: none;
+	border-left: var(--horiz-border);
+	border-top: var(--vert-border);
+	border-bottom: var(--vert-border);
+}
+.group :first-child {
+	border-top-left-radius: var(--radius);
+	border-bottom-left-radius: var(--radius);
+}
+.group :last-child {
+	border-top-right-radius: var(--radius);
+	border-bottom-right-radius: var(--radius);
+	border-right: var(--horiz-border);
+}
+
+.util-entry {
+	background: #aaa;
+	color: #888;
+}

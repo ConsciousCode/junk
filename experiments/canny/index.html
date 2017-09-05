@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Canny Edge Detection</title>
+
+        <link rel="stylesheet" href="main.css"/>
+        
+        <script src="util.js"></script>
+        <script src="main.js"></script>
+    </head>
+    <body>
+        <h2>Canny Edge Detection<sup><a href="https://en.wikipedia.org/wiki/Canny_edge_detector">*</a></sup></h2>
+
+        <div id="controls">
+            <input type="file" id="file" />
+            <hr />
+            <button id="btn_load">Load Image</button>
+            <button id="btn_to_canvas">Image to Canvas</button>
+            <hr />
+            <button id="btn_filter">Gaussian Filter</button><br />
+            Filter Radius: <input id="in_filter_radius" type="number" value="5" /><br />
+            Include Alpha: <input id="in_alpha" type="checkbox" />
+        </div>
+
+        <div id="display">
+            <table>
+                <tr>
+                    <th>Image</th>
+                    <th>Output</th>
+                </tr>
+                <tr>
+                    <td>
+                        <img id="image" />
+                    </td>
+                    <td>
+                        <canvas id="output"></canvas>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>

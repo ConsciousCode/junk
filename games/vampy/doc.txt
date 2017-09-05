@@ -1,0 +1,63 @@
+Emotes: happy sad question angry surprise coy
+Directive: alert come go stop build
+Item: milk sun moon wood
+Descriptive: fangs dead
+
+Items:
+ * Milk
+ * Wood
+
+Elements:
+ * Trees
+ * Well
+ * Fire
+ * Weapon
+ * Rock
+ * Disguise?
+
+I don't want a round to be longer than an hour. A few minutes even
+
+Want to make this a game of simplified social exploration
+Interesting idea: Make vampires and humans equally powerful, equally capable of transitioning. Let social roles dictate that vampires are the hunters, not the hunted
+
+Players can be killed, but round winner is determined by the number of players in a contiguous base
+
+Players lose points every time they transition
+
+Milk cures vampirism
+
+Changing takes a bit. Milk stops vampirism, blood stops humanism.
+
+Players can carry one thing at a time, forcing cooperation
+
+Vampirism cured by getting holy water?
+
+Vampires become human in daylight?
+* Daylight + holy sigil
+* Daylight also hurts
+
+Humans can't see in the dark so well
+
+How to determine friend or foe?
+* Vampires will, naturally, be able to bite humans
+
+Can hold, one visible and one hidden:
+* Pick-Axe (2 stone, 1 wood)
+* Holy sigil (2 wood, 2 stone, 4 milk)
+* Torch (2 wood)
+* Rope (4 wood)
+
+* Milk (pet a cow)
+* Blood (hurt a player)
+* Wood (mine a tree)
+* Stone (mine a rock)
+
+* wall (4 stone)
+* floor (4 wood)
+* door (2 wood, 2 stone)
+* bridge (2 wood, 2 stone)
+
+* Tree
+* Rock
+* Water
+* Grass

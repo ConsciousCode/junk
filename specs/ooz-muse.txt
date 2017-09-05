@@ -1,0 +1,42 @@
+# = (#,(#))
+0 = (# f,(#) k):k(f)
+1 = (# f,(#) k):f(0,k) = (# f, (#) k):f((# f,(#) k):k(f), k)
+2 = (# f,(#) k):f(1,k)
+
+-1 = (# f,(#) k):f(-2,k)
+
+(# f,(#) k):k(
+	(# g,(#) k):f(g,k)
+)
+
+incr n f x = f(n f x)
+incr(n,f,x) = f(n(f,x))
+incr = L n.L f.f(n f)
+
+incr = (# n, (#) k):k(
+	(# f, (#) k):n(f, (# nf):f(nf, k))
+)
+
+incr(0) = (# f, (#) k):0(f, (# nf):f(nf, k))
+	(# f, (#) k):f(f, k)
+
+neg1(neg1) = function(g){
+	return neg1(g);
+}
+
+(# a,# b,(#) k) add(
+	
+
+(# a,# b,(#) k) mul(
+	(# res,# rem) mul-by-add:if(rem,
+		():k(res),
+		():add(res,a,
+			(# res+a):sub(rem,1,
+				(# rem-1):mul-by-add(res+a,rem-1)
+			)
+		)
+	)
+):mul-by-add(a,b)
+
+(# a,# b,(#) k,(#) err) div(
+	(# res,# rem)
