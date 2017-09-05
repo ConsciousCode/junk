@@ -1,0 +1,33 @@
+body {
+    font-family: arial;
+    text-align: center;
+}
+
+a {
+    text-decoration: none;
+}
+
+#controls, #display {
+    padding: 10px;
+    margin: auto;
+    margin-bottom: 20px;
+    border: 1px solid #aaa;
+    border-radius: 10px;
+    width: 600px;
+}
+
+img, canvas {
+    max-width: 2.5in;
+    max-height: 2.5in;
+    padding: 0px 0px 0px 0px;
+    margin: 0px 0px -4px 0px;
+}
+
+table, td, th{
+    border: 1px solid black;
+}
+
+table {
+    margin: auto;
+    border-collapse: collapse;
+}
