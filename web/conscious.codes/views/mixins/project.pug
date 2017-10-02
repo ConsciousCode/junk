@@ -1,0 +1,19 @@
+include ./util.pug
+
+mixin project(name)
+	html
+		head
+			title= name
+			+style("/style/main.css")
+		body
+			header
+				#version 0.0.1
+				nav
+					ul
+						li
+							a(href="/project/espresso") Espresso
+						li
+							a(href="/project/glitchgame") "Glitch game"
+						li
+							a(href="/project/snow") Snow
+			block

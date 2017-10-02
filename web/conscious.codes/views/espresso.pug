@@ -1,0 +1,23 @@
+include ./mixins/project.pug
+
++project("Espresso")
+	| Espresso is a programming language borrowing the best
+	|  elements of languages like
+	ul.comma
+		li
+			+language("js")
+		li
+			+language("python")
+		li
+			+language("lua")
+		li
+			+language("lisp")
+		li
+			+language("bash")
+	|. It's designed to be easy to read, write, parse, and
+	|   embed. In the future, I hope to use this as a
+	|   persisted scripting language for tasks that would
+	|   normally use the shell.
+	ul
+		li
+			a(href="https://github.com/ConsciousCode/espresso") Github

@@ -1,0 +1,18 @@
+mixin style(href)
+	link(rel="stylesheet" href=href)
+
+mixin script(src)
+	script(src=src)
+
+mixin language(ext)
+	case ext
+		when "js"
+			span.language Javascript
+		when "python"
+			span.language Python
+		when "lua"
+			span.language Lua
+		when "lisp"
+			span.language Lisp
+		when "bash"
+			span.language Bash

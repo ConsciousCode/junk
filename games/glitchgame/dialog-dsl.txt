@@ -1,0 +1,15 @@
+character
+dialog start
+dialog end
+flags
+quantities (keys > 0)
+
+Elderbug -> init
+	init
+		[flag has flower]
+			Oh, thanks again for the flower! Would you like to see it?
+			
+			Look at the flower?
+			* Yes -> look at flower
+			* No -> bench
+			[flag has super flower]* Give new flower -> new flower
